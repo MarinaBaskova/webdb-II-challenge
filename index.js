@@ -8,7 +8,7 @@ server.use(express.json());
 server.use(helmet());
 
 // endpoints here
-server.use('/api/zoo', zooRouter);
+server.use('/api/zoos', zooRouter);
 
 const port = process.env.PORT || 8000;
 
