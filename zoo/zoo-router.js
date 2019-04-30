@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 			res.status(200).json(zoos);
 		})
 		.catch((err) => {
-			res.status(500).json(err);
+			res.status(500).json({ error: 'The zoos information could not be retrieved.' });
 		});
 });
 
@@ -29,11 +29,11 @@ router.get('/:id', (req, res) => {
 			if (zoo) {
 				res.status(200).json(zoo);
 			} else {
-				res.status(400).json({ error: 'Zoo is not found with the provided id' });
+				res.status(404).json({ error: 'The zoo with the specified ID does not exist.' });
 			}
 		})
 		.catch((err) => {
-			res.status(500).json(err);
+			res.status(500).json({ error: 'The zoo information could not be retrieved.' });
 		});
 });
 
@@ -56,7 +56,7 @@ router.post('/', (req, res) => {
 				res.status(201).json(ids);
 			})
 			.catch((err) => {
-				res.status(500).json(err);
+				res.status(500).json({ error: 'There was an error while saving the zoo to the database' });
 			});
 	}
 });
@@ -75,7 +75,7 @@ router.put('/:id', (req, res) => {
 						res.status(200).json(zoo);
 					})
 					.catch((err) => {
-						res.status(500).json(err);
+						res.status(404).json({ error: 'The zoo with the specified ID does not exist.' });
 					});
 			} else {
 				res.status(404).json({ message: 'It was an error while updating your Zoo, please try again' });
@@ -94,11 +94,11 @@ router.delete('/:id', (req, res) => {
 			if (numOfDeleted > 0) {
 				res.status(204).end();
 			} else {
-				res.status(404).json({ error: 'It was an error while deleting your Zoo, please try again' });
+				res.status(404).json({ error: 'The zoo with the specified ID does not exist.' });
 			}
 		})
 		.catch((err) => {
-			res.status(500).json(err);
+			res.status(500).json({ error: 'It was an error while deleting your Zoo, please try again' });
 		});
 });
 
