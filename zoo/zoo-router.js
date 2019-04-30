@@ -61,6 +61,31 @@ router.post('/', (req, res) => {
 	}
 });
 
+router.put('/:id', (req, res) => {
+	db('zoos')
+		.where({ id: req.params.id })
+		.update(req.body)
+		.then((numOUpdated) => {
+			console.log(numOUpdated);
+			if (numOUpdated > 0) {
+				db('zoos')
+					.where({ id: req.params.id })
+					.first()
+					.then((zoo) => {
+						res.status(200).json(zoo);
+					})
+					.catch((err) => {
+						res.status(500).json(err);
+					});
+			} else {
+				res.status(404).json({ message: 'It was an error while updating your Zoo, please try again' });
+			}
+		})
+		.catch((err) => {
+			res.status(500).json(err);
+		});
+});
+
 router.delete('/:id', (req, res) => {
 	db('zoos')
 		.where({ id: req.params.id })
